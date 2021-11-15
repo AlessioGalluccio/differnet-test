@@ -30,8 +30,8 @@ def nf_head(input_dim=c.n_feat):
 class DifferNet(nn.Module):
     def __init__(self):
         super(DifferNet, self).__init__()
-        #self.feature_extractor = alexnet(pretrained=True)
-        self.feature_extractor = torch.hub.load('pytorch/vision:v0.10.0', 'alexnet', pretrained=True)
+        self.feature_extractor = alexnet(pretrained=True)
+        #self.feature_extractor = torch.hub.load('pytorch/vision:v0.10.0', 'alexnet', pretrained=True)
         self.nf = nf_head()
 
     def forward(self, x):

@@ -6,6 +6,10 @@ For further information contact Marco Rudolph (rudolph@tnt.uni-hannover.de)'''
 import config as c
 from train import train
 from utils import load_datasets, make_dataloaders
+import os
+
+#I change the location where pytorch saves pretrained models
+os.environ['TORCH_HOME'] = 'models\\alexnet' #setting the environment variable
 
 train_set, test_set = load_datasets(c.dataset_path, c.class_name)
 train_loader, test_loader = make_dataloaders(train_set, test_set)
