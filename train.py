@@ -8,6 +8,19 @@ from localization import export_gradient_maps
 from model import DifferNet, save_model, save_weights
 from utils import *
 
+import neptune.new as neptune
+import config as c
+
+run = neptune.init(
+    project="alegalluccio/differnet-test",
+    api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiI2Y2IyYWYzOS0wZjI0LTRkNzAtODI1ZS00YTFkZjA1MWJjNzcifQ==",
+)  # your credentials
+
+run["name_dataset"] = [c.dataset_path]
+run["img_dims"] = [c.img_dims]
+run["device"] = c.device
+run["n_scales"] = c.n_scales
+
 
 class Score_Observer:
     '''Keeps an eye on the current and highest score so far'''
@@ -92,6 +105,9 @@ def train(train_loader, test_loader):
                          print_score=c.verbose or epoch == c.meta_epochs - 1)
         score_obs_aucpr.update(average_precision_score(is_anomaly, anomaly_score), epoch,
                          print_score=c.verbose or epoch == c.meta_epochs - 1)
+        run["train/auroc"].log(score_obs_auroc.last)
+        run["train/aucpr"].log(score_obs_aucpr.last)
+
 
 
     if c.grad_map_viz:
