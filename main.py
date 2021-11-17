@@ -8,6 +8,10 @@ from train import train
 from utils import load_datasets, make_dataloaders
 import os
 
+import sys
+print("Python version")
+print (sys.version)
+
 #I change the location where pytorch saves pretrained models
 os.environ['TORCH_HOME'] = 'models\\alexnet' #setting the environment variable
 
