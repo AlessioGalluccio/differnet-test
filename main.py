@@ -11,6 +11,7 @@ import os
 import sys
 print("Python version")
 print (sys.version)
+print(os.listdir())
 
 #I change the location where pytorch saves pretrained models
 os.environ['TORCH_HOME'] = 'models\\alexnet' #setting the environment variable
