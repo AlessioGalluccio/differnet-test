@@ -15,6 +15,10 @@ print (sys.version)
 #I change the location where pytorch saves pretrained models
 os.environ['TORCH_HOME'] = 'models\\alexnet' #setting the environment variable
 
+#manage dataset
+from handledata import handledata
+handledata()
+
 train_set, test_set = load_datasets(c.dataset_path, c.class_name)
 train_loader, test_loader = make_dataloaders(train_set, test_set)
 model = train(train_loader, test_loader)

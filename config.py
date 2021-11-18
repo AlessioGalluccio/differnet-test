@@ -9,8 +9,8 @@ import torch
 
 
 # data settings
-dataset_path = "dummy_dataset"
-class_name = "dummy_class"
+dataset_path = "dataset"
+class_name = "toothbrush"
 modelname = "dummy_test"
 
 img_size = (448, 448)
