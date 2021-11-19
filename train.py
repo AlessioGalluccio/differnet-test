@@ -22,6 +22,9 @@ run["name_dataset"] = [c.dataset_path]
 run["img_dims"] = [c.img_dims]
 run["device"] = c.device
 run["n_scales"] = c.n_scales
+run["class_name"] = [c.class_name]
+run["params"] = c
+
 
 
 
@@ -78,6 +81,7 @@ def train(train_loader, test_loader):
             mean_train_loss = np.mean(train_loss)
             if c.verbose:
                 print('Epoch: {:d}.{:d} \t train loss: {:.4f}'.format(epoch, sub_epoch, mean_train_loss))
+            run["train/train_loss"].log(train_loss)
 
         # evaluate
         model.eval()
@@ -112,6 +116,7 @@ def train(train_loader, test_loader):
 
         run["train/auroc"].log(score_obs_auroc.last)
         run["train/aucpr"].log(score_obs_aucpr.last)
+        run["train/test_loss"].log(test_loss)
 
         
 
