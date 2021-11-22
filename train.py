@@ -12,18 +12,24 @@ from utils import *
 import neptune.new as neptune
 import config as c
 
+if c.neptune_activate:
+    run = neptune.init(
+        project="alegalluccio/differnet-test",
+        api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiI2Y2IyYWYzOS0wZjI0LTRkNzAtODI1ZS00YTFkZjA1MWJjNzcifQ==",
+    )  # your credentials
 
-run = neptune.init(
-    project="alegalluccio/differnet-test",
-    api_token="eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiI2Y2IyYWYzOS0wZjI0LTRkNzAtODI1ZS00YTFkZjA1MWJjNzcifQ==",
-)  # your credentials
+    run["name_dataset"] = [c.dataset_path]
+    run["img_dims"] = [c.img_dims]
+    run["device"] = c.device
+    run["n_scales"] = c.n_scales
+    run["class_name"] = [c.class_name]
+    run["meta_epochs"] = c.meta_epochs
+    run["sub_epochs"] = c.sub_epochs
+    run["batch_size"]= c.batch_size
+    run["n_coupling_blocks"] = c.n_coupling_blocks
+    run["n_transforms"] = c.n_transforms
+    run["dropout"] =c.dropout
 
-run["name_dataset"] = [c.dataset_path]
-run["img_dims"] = [c.img_dims]
-run["device"] = c.device
-run["n_scales"] = c.n_scales
-run["class_name"] = [c.class_name]
-run["params"] = c
 
 
 
@@ -81,7 +87,8 @@ def train(train_loader, test_loader):
             mean_train_loss = np.mean(train_loss)
             if c.verbose:
                 print('Epoch: {:d}.{:d} \t train loss: {:.4f}'.format(epoch, sub_epoch, mean_train_loss))
-            run["train/train_loss"].log(train_loss)
+            if c.neptune_activate:
+                run["train/train_loss"].log(mean_train_loss)
 
         # evaluate
         model.eval()
@@ -113,10 +120,10 @@ def train(train_loader, test_loader):
         score_obs_aucpr.update(average_precision_score(is_anomaly, anomaly_score), epoch,
                          print_score=c.verbose or epoch == c.meta_epochs - 1)
 
-
-        run["train/auroc"].log(score_obs_auroc.last)
-        run["train/aucpr"].log(score_obs_aucpr.last)
-        run["train/test_loss"].log(test_loss)
+        if c.neptune_activate:
+            run["train/auroc"].log(score_obs_auroc.last)
+            run["train/aucpr"].log(score_obs_aucpr.last)
+            run["train/test_loss"].log(test_loss)
 
         
 

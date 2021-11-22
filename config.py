@@ -7,6 +7,8 @@ device = 'cuda' # or 'cpu'
 import torch
 torch.cuda.set_device(0)
 
+# neptune
+neptune_activate = True
 
 # data settings
 dataset_path = "dataset"
