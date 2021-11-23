@@ -101,17 +101,25 @@ def train(train_loader, test_loader):
             for i, data in enumerate(tqdm(test_loader, disable=c.hide_tqdm_bar)):
                 inputs, labels = preprocess_batch(data)
                 z = model(inputs)
+                # Why do I compute the loss also for defective images, which will have great loss values?
                 loss = get_loss(z, model.nf.jacobian(run_forward=False))
                 test_z.append(z)
                 test_loss.append(t2np(loss))
                 test_labels.append(t2np(labels))
 
+        test_loss_good = list()
+        test_loss_defective = list()
+        for i in range(len(test_labels)):
+            if test_labels[i] == 0: # label value of good TODO eliminate magic numbers
+                test_loss_good.append(test_loss[i])
+            else:
+                test_loss_defective.append(-test_loss[i])
+        test_loss_good = np.mean(np.array(test_loss_good))
+        test_loss_defective = np.mean(np.array(test_loss_defective))
+
         test_loss = np.mean(np.array(test_loss))
         if c.verbose:
-            print('Epoch: {:d} \t test_loss: {:.4f}'.format(epoch, test_loss))
-
-        test_labels = np.concatenate(test_labels)
-        is_anomaly = np.array([0 if l == 0 else 1 for l in test_labels])
+            print('Epoch: {:d} \t test_loss: {:.4f} \t test_loss_good: {:.4f} \t test_loss_defective: {:.4f}'.format(epoch, test_loss, test_loss_good, test_loss_defective))
 
         z_grouped = torch.cat(test_z, dim=0).view(-1, c.n_transforms_test, c.n_feat)
         anomaly_score = t2np(torch.mean(z_grouped ** 2, dim=(-2, -1)))
@@ -124,6 +132,8 @@ def train(train_loader, test_loader):
             run["train/auroc"].log(score_obs_auroc.last)
             run["train/aucpr"].log(score_obs_aucpr.last)
             run["train/test_loss"].log(test_loss)
+            run["train/test_loss_good"].log(test_loss_good)
+            run["train/test_loss_defective"].log(test_loss_defective)
 
         
 
