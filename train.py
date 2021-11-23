@@ -121,6 +121,8 @@ def train(train_loader, test_loader):
         if c.verbose:
             print('Epoch: {:d} \t test_loss: {:.4f} \t test_loss_good: {:.4f} \t test_loss_defective: {:.4f}'.format(epoch, test_loss, test_loss_good, test_loss_defective))
 
+        test_labels = np.concatenate(test_labels)
+        is_anomaly = np.array([0 if l == 0 else 1 for l in test_labels])
         z_grouped = torch.cat(test_z, dim=0).view(-1, c.n_transforms_test, c.n_feat)
         anomaly_score = t2np(torch.mean(z_grouped ** 2, dim=(-2, -1)))
         score_obs_auroc.update(roc_auc_score(is_anomaly, anomaly_score), epoch,
