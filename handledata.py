@@ -13,11 +13,16 @@ def handledata():
     copy_directory("./data/mvtec/"+ c.class_name + "/train/good", "./dataset/"+ c.class_name + "/train/good")
     copy_directory("./data/mvtec/"+ c.class_name + "/test/good", "./dataset/"+ c.class_name + "/test/good")
     #copy_directory("./data/mvtec/"+ c.class_name + "/test/defective", "./dataset/"+ c.class_name + "/test/anomaly")
-    copy_directory("./data/mvtec/"+ c.class_name + "/test/crack", "./dataset/"+ c.class_name + "/test/anomaly")
-    copy_directory("./data/mvtec/"+ c.class_name + "/test/faulty_imprint", "./dataset/"+ c.class_name + "/test/anomaly")
-    copy_directory("./data/mvtec/"+ c.class_name + "/test/poke", "./dataset/"+ c.class_name + "/test/anomaly")
-    copy_directory("./data/mvtec/"+ c.class_name + "/test/scratch", "./dataset/"+ c.class_name + "/test/anomaly")
-    copy_directory("./data/mvtec/"+ c.class_name + "/test/squeeze", "./dataset/"+ c.class_name + "/test/anomaly")
+    #copy_directory("./data/mvtec/"+ c.class_name + "/test/crack", "./dataset/"+ c.class_name + "/test/anomaly")
+    #copy_directory("./data/mvtec/"+ c.class_name + "/test/faulty_imprint", "./dataset/"+ c.class_name + "/test/anomaly")
+    #copy_directory("./data/mvtec/"+ c.class_name + "/test/poke", "./dataset/"+ c.class_name + "/test/anomaly")
+    #copy_directory("./data/mvtec/"+ c.class_name + "/test/scratch", "./dataset/"+ c.class_name + "/test/anomaly")
+    #copy_directory("./data/mvtec/"+ c.class_name + "/test/squeeze", "./dataset/"+ c.class_name + "/test/anomaly")
+    copy_directory("./data/mvtec/"+ c.class_name + "/test/bent", "./dataset/"+ c.class_name + "/test/anomaly")
+    copy_directory("./data/mvtec/"+ c.class_name + "/test/broken", "./dataset/"+ c.class_name + "/test/anomaly")
+    copy_directory("./data/mvtec/"+ c.class_name + "/test/glue", "./dataset/"+ c.class_name + "/test/anomaly")
+    copy_directory("./data/mvtec/"+ c.class_name + "/test/metal_contamination", "./dataset/"+ c.class_name + "/test/anomaly")
+    copy_directory("./data/mvtec/"+ c.class_name + "/test/thread", "./dataset/"+ c.class_name + "/test/anomaly")
 
 
 

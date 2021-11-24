@@ -12,7 +12,7 @@ neptune_activate = True
 
 # data settings
 dataset_path = "dataset"
-class_name = "capsule"
+class_name = "grid"
 modelname = "capsule_test"
 
 img_size = (448, 448)
