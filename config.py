@@ -2,18 +2,18 @@
 research purposes. Don't try this code if you are a software engineer.'''
 
 # device settings
-#device = 'cuda' # or 'cpu'
-device = 'cpu'
+device = 'cuda' # or 'cpu'
+#device = 'cpu'
 import torch
-#torch.cuda.set_device(0)
+torch.cuda.set_device(0)
 
 # neptune
 neptune_activate = True
 
 # data settings
 dataset_path = "dataset"
-class_name = "toothbrush"
-modelname = "dummy_test"
+class_name = "capsule"
+modelname = "capsule_test"
 
 img_size = (448, 448)
 img_dims = [3] + list(img_size)

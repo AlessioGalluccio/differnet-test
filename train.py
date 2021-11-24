@@ -28,7 +28,9 @@ if c.neptune_activate:
     run["batch_size"]= c.batch_size
     run["n_coupling_blocks"] = c.n_coupling_blocks
     run["n_transforms"] = c.n_transforms
+    run["n_transforms_test"] = c.n_transforms_test
     run["dropout"] =c.dropout
+    run["learning_rate"] = c.lr_init
 
 
 
