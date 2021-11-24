@@ -12,8 +12,8 @@ neptune_activate = True
 
 # data settings
 dataset_path = "dataset"
-class_name = "grid"
-modelname = "capsule_test"
+class_name = "hazelnut"
+modelname = "hazelnut_test"
 
 img_size = (448, 448)
 img_dims = [3] + list(img_size)
